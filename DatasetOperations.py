@@ -2,20 +2,16 @@ import os
 from PIL import Image
 from pathlib import Path
 import tensorflow as tf
-X = tf.Variable([350,432])
+import numpy as np
+X = []
 
-pathphotos = Path("F:\\New folder\Data").glob('**/*.jpg')
+pathphotos = Path("/home/ahmed/AgeRecognition/TrainData").glob('**/*.jpg')
 
 for ppath in pathphotos:
-    path_of_photo = str(ppath)
-    im = Image.open(path_of_photo)
-    px = im.load()
-    X.append(px)
-    Arr=[]
-    for i in range(350):
-        for j in range(432):
-          Arr.append(int(px[i,j]))
-    X.append(Arr)
+    #convert to numpy array
+    i=np.asarray(Image.open(str(ppath)))
+    #convert to tensor
+    x=tf.convert_to_tensor(i)
+    #X is a list of tensors
+    X.append(x)
 
-print(X)
-#print (X)
